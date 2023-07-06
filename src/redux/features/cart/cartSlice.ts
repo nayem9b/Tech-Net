@@ -4,9 +4,11 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface ICart {
   products: IProduct[];
+  total: number;
 }
 
 const initialState: ICart = {
+  total: 0,
   products: [],
 };
 
@@ -24,6 +26,8 @@ const cartSlice = createSlice({
       } else {
         state.products.push({ ...action.payload, quantity: 1 });
       }
+
+      state.total = state.total + action.payload.price;
     },
     removeOne: (state, action: PayloadAction<IProduct>) => {
       const existingProduct = state.products.find(
@@ -37,12 +41,15 @@ const cartSlice = createSlice({
           (product) => product._id !== action.payload._id
         );
       }
+      state.total = state.total - action.payload.price;
     },
 
     removeFromCart: (state, action: PayloadAction<IProduct>) => {
       state.products = state.products.filter(
         (product) => product._id !== action.payload._id
       );
+      state.total =
+        state.total - action.payload.price * action.payload.quantity!;
     },
   },
 });
