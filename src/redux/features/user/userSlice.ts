@@ -32,7 +32,7 @@ export const createUser = createAsyncThunk(
   'user/createUser',
   async ({ email, password }: ICredential) => {
     const data = await createUserWithEmailAndPassword(auth, email, password);
-
+    console.log(auth, data);
     return data.user.email;
   }
 );
@@ -72,6 +72,7 @@ const userSlice = createSlice({
         state.user.email = null;
         state.isError = true;
         state.error = action.error.message as string;
+        state.isLoading = false;
       })
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;

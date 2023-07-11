@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 
 export default function Products() {
   const { data, isLoading } = useGetProductsQuery(undefined);
-
+  console.log(data);
   const { toast } = useToast();
 
   const { priceRange, status } = useAppSelector((state) => state.product);

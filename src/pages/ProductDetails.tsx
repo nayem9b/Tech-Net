@@ -1,6 +1,7 @@
 import ProductReview from '@/components/ProductReview';
 import { Button } from '@/components/ui/button';
-import { useGetSingleProductQuery } from '@/redux/features/products/productApi';
+import { useSingleProductQuery } from '@/redux/features/products/productApi';
+
 import { IProduct } from '@/types/globalTypes';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -8,7 +9,7 @@ import { useParams } from 'react-router-dom';
 export default function ProductDetails() {
   const { id } = useParams();
 
-  const { data: product, isLoading, error } = useGetSingleProductQuery(id);
+  const { data: product, isLoading, error } = useSingleProductQuery(id);
 
   return (
     <>
