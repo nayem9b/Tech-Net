@@ -4,17 +4,22 @@ import MainLayout from './layouts/MainLayout';
 import { setLoading, setUser } from './redux/features/user/userSlice';
 import { useAppDispatch } from './redux/hooks';
 import { auth } from './lib/firebase';
+import { useEffect } from 'react';
 
 function App() {
   const dispatch = useAppDispatch();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      dispatch(setUser(user.email!));
-      dispatch(setLoading(false));
-    } else {
-      dispatch(setLoading(false));
-    }
-  });
+  useEffect(() => {
+    dispatch(setLoading(true));
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(setUser(user.email!));
+        dispatch(setLoading(false));
+      } else {
+        dispatch(setLoading(false));
+      }
+    });
+  }, [dispatch]);
+
   return (
     <div>
       <Toaster />
