@@ -12,8 +12,10 @@ import {
 import { HiOutlineSearch } from 'react-icons/hi';
 import Cart from '../components/Cart';
 import logo from '../assets/images/technet-logo.png';
+import { useAppSelector } from '@/redux/hooks';
 
 export default function Navbar() {
+  const { user } = useAppSelector((state) => state.user);
   return (
     <nav className="w-full h-16 fixed top backdrop-blur-lg z-10">
       <div className="h-full w-full bg-white/60">
@@ -60,6 +62,20 @@ export default function Navbar() {
                     <DropdownMenuItem className="cursor-pointer">
                       Profile
                     </DropdownMenuItem>
+                    {!user.email && (
+                      <>
+                        <Link to="/login">
+                          <DropdownMenuItem className="cursor-pointer">
+                            Login
+                          </DropdownMenuItem>
+                        </Link>
+                        <Link to="/signup">
+                          <DropdownMenuItem className="cursor-pointer">
+                            Sign up
+                          </DropdownMenuItem>
+                        </Link>
+                      </>
+                    )}
                     <DropdownMenuItem className="cursor-pointer">
                       Billing
                     </DropdownMenuItem>

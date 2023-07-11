@@ -15,6 +15,7 @@ interface IProps {
 export default function ProductReview({ id }: IProps) {
   const [inputValue, setInputValue] = useState<string>('');
 
+  //!refetch on Mount
   const { data } = useGetCommentQuery(id, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 30000,
