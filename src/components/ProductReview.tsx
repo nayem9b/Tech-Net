@@ -18,7 +18,7 @@ export default function ProductReview({ id }: IProps) {
   //!refetch on Mount
   const { data } = useGetCommentQuery(id, {
     refetchOnMountOrArgChange: true,
-    pollingInterval: 30000,
+    pollingInterval: 10000,
   });
   const [postComment, { isLoading, isError, isSuccess }] =
     usePostCommentMutation();

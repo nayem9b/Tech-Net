@@ -12,10 +12,21 @@ import {
 import { HiOutlineSearch } from 'react-icons/hi';
 import Cart from '../components/Cart';
 import logo from '../assets/images/technet-logo.png';
-import { useAppSelector } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { signOut } from 'firebase/auth';
+import { setUser } from '@/redux/features/user/userSlice';
+import { auth } from '@/lib/firebase';
 
 export default function Navbar() {
   const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const handleLogout = () => {
+    console.log('Logout');
+    signOut(auth).then(() => {
+      // Sign-out successful.
+      dispatch(setUser(null));
+    });
+  };
   return (
     <nav className="w-full h-16 fixed top backdrop-blur-lg z-10">
       <div className="h-full w-full bg-white/60">
@@ -76,15 +87,14 @@ export default function Navbar() {
                         </Link>
                       </>
                     )}
-                    <DropdownMenuItem className="cursor-pointer">
-                      Billing
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
-                      Team
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
-                      Subscription
-                    </DropdownMenuItem>
+                    {user.email && (
+                      <DropdownMenuItem
+                        onClick={handleLogout}
+                        className="cursor-pointer"
+                      >
+                        Logout
+                      </DropdownMenuItem>
+                    )}
                   </DropdownMenuContent>
                 </DropdownMenu>
               </li>
